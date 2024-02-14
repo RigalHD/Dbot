@@ -1,0 +1,8 @@
+.vscode/
+cfg_s.py
+__pycache__/
+.pyc
+.db
+users.txt
+menuf.txt
+DbotConfig.py
