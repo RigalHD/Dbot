@@ -98,25 +98,27 @@ class Bot_Requests_DB_Control(commands.Cog):
         print(f"В базе данных гильдий с системой заявок было очищено поле с айди {db_guild_id} ! -> {inter.user.id} ")
         await inter.response.send_message("Гильдия удалена из заявок!")
 
-    # @commands.slash_command(guild_ids=[1097125882876923954])
-    # @commands.has_permissions(administrator=True)
-    # async def renew_form_table(self, inter: disnake.CommandInteraction):
-    #     if inter.user.id != 581348510830690344:
-    #         return
-    #     with sqlite3.connect("no_access_to_requests.db") as db:
-    #         cursor = db.cursor()
+    @commands.slash_command(guild_ids=[1097125882876923954])
+    @commands.has_permissions(administrator=True)
+    async def renew_form_table(self, inter: disnake.CommandInteraction):
+        if inter.user.id != 581348510830690344:
+            return
+        with sqlite3.connect("no_access_to_requests.db") as db:
+            cursor = db.cursor()
 
-    #         # cursor.execute("DELETE FROM forms_to_add_requests")
-    #         cursor.execute("DROP TABLE IF EXISTS forms_to_add_requests")
-    #         cursor.execute("""CREATE TABLE IF NOT EXISTS forms_to_add_requests (
-    #         id INTEGER PRIMARY KEY AUTOINCREMENT,
-    #         text_of_request TEXT,
-    #         guild_of_request TEXT,
-    #         id_of_role TEXT,
-    #         channel_for_requests TEXT,
-    #         channel_for_checking_requests TEXT,
-    #         id_of_sender TEXT,
-    #         date_of_request DATETIME,
-    #         status_of_request TEXT
-    #         )""")
-    #         db.commit()
+            # cursor.execute("DELETE FROM forms_to_add_requests")
+            # cursor.execute("DROP TABLE IF EXISTS forms_to_add_requests")
+            cursor.execute("""CREATE TABLE IF NOT EXISTS forms_to_add_requests (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            text_of_request TEXT,
+            guild_of_request TEXT,
+            id_of_role TEXT,
+            channel_for_requests TEXT,
+            channel_for_checking_requests TEXT,
+            id_of_sender TEXT,
+            date_of_request DATETIME,
+            status_of_request TEXT
+            )""")
+            db.commit()
+
+

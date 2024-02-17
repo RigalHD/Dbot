@@ -68,22 +68,22 @@ class MyModal(disnake.ui.Modal):
         with sqlite3.connect("no_access_to_requests.db") as db:
             cursor = db.cursor()
 
-            # cursor.execute(
-            #     """CREATE TABLE IF NOT EXISTS requests_to_server(
-            #     in_db_user_id INTEGER PRIMARY KEY AUTOINCREMENT,
-            #     discord_id BIGINT,
-            #     nick TEXT,
-            #     age INTEGER,
-            #     play_time TEXT,
-            #     past TEXT,
-            #     p_status TEXT,
-            #     cancel_reason TEXT,
-            #     guild_of_request TEXT,
-            #     date_of_request DATETIME
-            #     )""") 
-            # # все записи date_of_request с датой 2024-01-31 22:32:50.777804
-            # # - это записи, в которых не было предусмотрено сохранение даты отправки заявки
-            # db.commit()
+            cursor.execute(
+                """CREATE TABLE IF NOT EXISTS requests_to_server(
+                in_db_user_id INTEGER PRIMARY KEY AUTOINCREMENT,
+                discord_id BIGINT,
+                nick TEXT,
+                age INTEGER,
+                play_time TEXT,
+                past TEXT,
+                p_status TEXT,
+                cancel_reason TEXT,
+                guild_of_request TEXT,
+                date_of_request DATETIME
+                )""") 
+            # все записи date_of_request с датой 2024-01-31 22:32:50.777804
+            # - это записи, в которых не было предусмотрено сохранение даты отправки заявки
+            db.commit()
 
         self.requests_dict["new_member_id"] = inter.user.id
         vals = [inter.user.id]
@@ -223,7 +223,7 @@ class FormToAddRequestsModal(disnake.ui.Modal):
             # date_of_request DATETIME,
             # status_of_request TEXT
             # )""")
-
+            # СТАРАЯ ВЕРСИЯ БАЗЫ ДАННЫХ
 
             cursor.execute("""INSERT INTO forms_to_add_requests (
                         text_of_request, guild_of_request, id_of_role, channel_for_requests, 
