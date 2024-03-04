@@ -121,4 +121,16 @@ class Bot_Requests_DB_Control(commands.Cog):
             )""")
             db.commit()
 
+            cursor.execute("""CREATE TABLE IF NOT EXISTS forms_to_add_requests (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            discord_id TEXT,
+            guild_of_request TEXT,
+            id_of_role TEXT,
+            channel_for_requests TEXT,
+            channel_for_checking_requests TEXT,
+            id_of_sender TEXT,
+            date_of_request DATETIME,
+            status_of_request TEXT
+            )""")
+            db.commit()
 
