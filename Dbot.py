@@ -279,3 +279,7 @@ async def guild_information(inter: disnake.CommandInteraction, guild_id):
 #     )
 
 #     await ch.send(embed=embed)
+
+
+# :)
+    
