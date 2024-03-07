@@ -1,6 +1,8 @@
 from Dbot import bot
 import disnake
 import sqlite3
+import asyncio
+import random
 from disnake.ext import commands
 from DbotConfig import cens_words
 from cogs.Dbot_Requests_Folder.commands import SendRequestButton
@@ -38,7 +40,7 @@ class Bot_Events(commands.Cog):
             description="Если бот в сети, то вам для написания заявки нужно нажать кнопку **✍️Заявка**",
             color=0x03fc6b
         )
-
+        
         # channel_litecraft = bot.get_channel(int(1118583261824815236))
         # roles_litecraft = (1118848120806178877, 1117027821827670095,)
         # requests_dict = {
@@ -96,6 +98,7 @@ class Bot_Events(commands.Cog):
                         description=f"Не удалось отправить сообщение с заявкой с содержанием \n```{GUILD}```",
                         color=0xff0000,
                     ))
+            
         
 
         view_menu_36 = Menu_Button()
@@ -108,6 +111,13 @@ class Bot_Events(commands.Cog):
         )
         await channel_menu.send(embed=button_embed_report, view = view_menu_36)
 
+        status = ['NewSide', 'Легион']
+        while not bot.is_closed():
+            next_status = random.choice(status)
+            await bot.change_presence(activity = disnake.Game(name = next_status))
+            await asyncio.sleep(20)
+
+    
     # @commands.Cog.listener()
     # async def on_message_edit(self, before: disnake.message.Message, after: disnake.message.Message):
     #     await bot.process_commands(after.content)
