@@ -11,6 +11,8 @@ bot = commands.Bot(
     )
 
 
+bot.activity.Game("NewSide!")
+
 
 @bot.slash_command(name="аватарка")
 async def user_avatar(inter: disnake.CommandInteraction, user: disnake.Member):
