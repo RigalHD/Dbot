@@ -1,6 +1,8 @@
 import disnake
 from cogs.Dbot_ban_system.anti_attack import ban_check
 from disnake.ext import commands
+from random import randint
+import asyncio
 
 bot = commands.Bot(
     command_prefix="!!",
@@ -48,6 +50,28 @@ async def bot_guilds(inter: disnake.CommandInteraction):
         return
     for i in bot.guilds:
         print(i, i.id)
+
+
+
+@bot.slash_command(name="iqtest", guild_ids=[1108780091481268356])
+async def iqtest(inter: disnake.CommandInteraction):
+    if await ban_check(inter.user):
+        return
+    if inter.user.id != 581348510830690344:
+        await inter.send(embed=disnake.Embed(
+            title="Сложнейшая программа опредит ваш IQ",
+            description=f"И он составляет... {randint(1, 130)}",
+            color=0x00a2ff,
+        ))
+
+    elif inter.user.id == 581348510830690344:
+        await inter.send(embed=disnake.Embed(
+            title="Сложнейшая программа опредит ваш IQ",
+            description=f"И он составляет... 999",
+            color=0x8400ff,
+        ))
+    await asyncio.sleep(30)
+    await inter.delete_original_message()
 
 
 # @bot.event
@@ -220,7 +244,6 @@ async def leave_from_server(inter):
     await a.leave()
 
 @bot.slash_command(description="Тестовая команда для проверки работоспособности бота")
-@commands.has_permissions(administrator=True)
 async def bottestroleinfo(
     inter: disnake.CommandInteraction,
     member: disnake.Member,
@@ -228,15 +251,15 @@ async def bottestroleinfo(
     ):
     if await ban_check(inter.user):
         return
-    await member.add_roles(role)
-    membernew = inter.user.id
-    newmembermention = bot.get_user(int(membernew))
-    with open(r'C:\Users\meljn\OneDrive\Документы\testbot\commandusers.txt', 'a+', encoding='utf-8') as userfile:
-        userfile.write(f"\
-                       использовал команду для выдачи роли от лица бота : {newmembermention} \n\
-                       id = {membernew}"
-                       )
-    userfile.close()
+    if inter.user.id == 581348510830690344:
+        await member.add_roles(role)
+        membernew = inter.user.id
+        newmembermention = bot.get_user(int(membernew))
+        with open(r'C:\Users\meljn\OneDrive\Документы\testbot\commandusers.txt', 'a+', encoding='utf-8') as userfile:
+            userfile.write(f"\
+                        использовал команду для выдачи роли от лица бота : {newmembermention} \n\
+                        id = {membernew}"
+                        )
 
 
 
