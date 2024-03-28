@@ -48,9 +48,8 @@ class For_Embed_Writing(commands.Cog):
 
     @commands.slash_command(guild_ids=[1097125882876923954], name="secret_embed")
     async def embedsecret(inter: disnake.CommandInteraction, channel):
-        if inter.user.id != 581348510830690344:
-            return
-        await For_Embed_Writing.embedmodal_(interaction=inter, channel=bot.get_channel(int(channel)))
+        if inter.user.id == 581348510830690344:
+            await For_Embed_Writing.embedmodal_(interaction=inter, channel=bot.get_channel(int(channel)))
 
 
     # @commands.slash_command(name = "embed_img")
