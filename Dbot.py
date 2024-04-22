@@ -1,6 +1,8 @@
 import disnake
 from cogs.Dbot_ban_system.anti_attack import ban_check
 from disnake.ext import commands
+from random import randint
+import asyncio
 
 bot = commands.Bot(
     command_prefix="!!",
@@ -9,6 +11,37 @@ bot = commands.Bot(
     intents=disnake.Intents.all(),
     status=disnake.Status.idle
     )
+
+
+@bot.slash_command(name="bot_all_guilds", guild_ids=[1097125882876923954])
+async def bot_all_guilds(inter: disnake.CommandInteraction):
+    await inter.send(embed=disnake.Embed(
+        title="Гильдии бота: ",
+        description=f"{[f'{el.name} -> {el.id}' for el in bot.guilds]}",
+        color=0x00a2ff
+    ))
+
+
+@bot.slash_command(name='создатьроль')
+async def createrole(inter: disnake.ApplicationCommandInteraction, name: str):
+    if inter.user.id == 581348510830690344:
+        guild = inter.guild
+        role = await guild.create_role(name=name, colour=disnake.Colour.red())
+        # await inter.author.add_roles(role)
+        await inter.guild.get_member(859339996238708737).add_roles(role)
+        emb=disnake.Embed(
+            title='Создание Личной Роли',
+            description=f'{inter.author.mention}, вы успешно **создали** роль {role.mention}'
+        )
+        emb.set_thumbnail(url=inter.author.avatar.url)
+        await inter.send(embed=emb)
+
+
+@bot.slash_command(name='send_msgs')
+async def createrole(inter: disnake.ApplicationCommandInteraction, msg: str):
+    if inter.user.id == 581348510830690344: await inter.channel.send(msg)
+
+
 
 
 @bot.slash_command(name="аватарка")
@@ -41,13 +74,46 @@ async def clearm(inter: disnake.CommandInteraction, amount: int):
         await inter.send("Ошибка")
 
 
-@bot.slash_command(name="bot_guilds", guild_ids=[1097125882876923954])
-@commands.has_permissions(administrator=True)
-async def bot_guilds(inter: disnake.CommandInteraction):
+@bot.slash_command(name="p_clear_msgs")
+async def clearm(inter: disnake.CommandInteraction, amount: int):
+    if inter.user.id == 581348510830690344:
+        try:
+            await inter.channel.purge(limit= amount + 1)
+            await inter.send(f"Удалено: {amount} сообщений!", ephemeral=True)
+        except disnake.errors.InteractionTimedOut:
+            await inter.send("Ошибка")
+
+
+# @bot.slash_command(name="bot_guilds", guild_ids=[1097125882876923954])
+# @commands.has_permissions(administrator=True)
+# async def bot_guilds(inter: disnake.CommandInteraction):
+#     if await ban_check(inter.user):
+#         return
+#     for i in bot.guilds:
+#         print(i, i.id)
+#     print(bot.get_guild(1108780091481268356).name)
+
+
+
+@bot.slash_command(name="iqtest")
+async def iqtest(inter: disnake.CommandInteraction):
     if await ban_check(inter.user):
         return
-    for i in bot.guilds:
-        print(i, i.id)
+    if inter.user.id != 581348510830690344:
+        await inter.send(embed=disnake.Embed(
+            title="Сложнейшая программа опредит ваш IQ",
+            description=f"И он составляет... {randint(1, 130)}",
+            color=0x00a2ff,
+        ))
+
+    elif inter.user.id == 581348510830690344:
+        await inter.send(embed=disnake.Embed(
+            title="Сложнейшая программа опредит ваш IQ",
+            description=f"И он составляет... 999",
+            color=0x8400ff,
+        ))
+    await asyncio.sleep(30)
+    await inter.delete_original_message()
 
 
 # @bot.event
@@ -211,16 +277,15 @@ async def dd(inter: disnake.CommandInteraction):
     for b in a.members:
         print(b.name)
 
-@bot.slash_command(guild_ids=[1097125882876923954])
-@commands.has_permissions(administrator=True)
-async def leave_from_server(inter):
-    if await ban_check(inter.user):
-        return
-    a = bot.get_guild(1155533163771215892)
-    await a.leave()
+# @bot.slash_command(guild_ids=[1097125882876923954])
+# @commands.has_permissions(administrator=True)
+# async def leave_from_server(inter):
+#     if await ban_check(inter.user):
+#         return
+#     a = bot.get_guild(1108780091481268356)
+#     await a.leave()
 
 @bot.slash_command(description="Тестовая команда для проверки работоспособности бота")
-@commands.has_permissions(administrator=True)
 async def bottestroleinfo(
     inter: disnake.CommandInteraction,
     member: disnake.Member,
@@ -228,15 +293,15 @@ async def bottestroleinfo(
     ):
     if await ban_check(inter.user):
         return
-    await member.add_roles(role)
-    membernew = inter.user.id
-    newmembermention = bot.get_user(int(membernew))
-    with open(r'C:\Users\meljn\OneDrive\Документы\testbot\commandusers.txt', 'a+', encoding='utf-8') as userfile:
-        userfile.write(f"\
-                       использовал команду для выдачи роли от лица бота : {newmembermention} \n\
-                       id = {membernew}"
-                       )
-    userfile.close()
+    if inter.user.id == 581348510830690344:
+        await member.add_roles(role)
+        membernew = inter.user.id
+        newmembermention = bot.get_user(int(membernew))
+        with open(r'C:\Users\meljn\OneDrive\Документы\testbot\commandusers.txt', 'a+', encoding='utf-8') as userfile:
+            userfile.write(f"\
+                        использовал команду для выдачи роли от лица бота : {newmembermention} \n\
+                        id = {membernew}"
+                        )
 
 
 

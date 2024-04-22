@@ -18,7 +18,7 @@ class Bot_Requests_DB_Control(commands.Cog):
     #         db.commit()
     #         print(f"База данных очищена! -> {inter.user.id} ")
     #         await inter.send("База данных очищена!")
-    
+
     @commands.slash_command(guild_ids=[1097125882876923954], name="удалить_из_черного_списка")
     @commands.has_permissions(administrator=True)
     async def requests_no_accses_db_clear(inter: disnake.CommandInteraction, db_user_id):

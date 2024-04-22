@@ -98,13 +98,19 @@ class ConfirmFormAddButton(disnake.ui.View):
     async def confirm(self, button: disnake.ui.Button, inter: disnake.CommandInteraction):
         with sqlite3.connect("no_access_to_requests.db") as db:
             cursor = db.cursor()
-            cursor.execute("""UPDATE forms_to_add_requests
-                            SET status_of_request = ? WHERE id = ?""",
-                            ("CONFIRMED", self.id_of_request))
-            data_of_request = cursor.execute("""SELECT guild_of_request, id_of_role, channel_for_requests,
-                                            channel_for_checking_requests, id_of_sender
-                                            FROM forms_to_add_requests WHERE id = ?""",
-                            (self.id_of_request,)).fetchone()
+            cursor.execute("""
+                           UPDATE forms_to_add_requests
+                           SET status_of_request = ? WHERE id = ?
+                           """,
+                           ("CONFIRMED", self.id_of_request)
+                           )
+            data_of_request = cursor.execute("""
+                                             SELECT guild_of_request, id_of_role, channel_for_requests, 
+                                             channel_for_checking_requests, id_of_sender 
+                                             FROM forms_to_add_requests WHERE id = ?
+                                             """,
+                                             (self.id_of_request,)
+                                             ).fetchone()
             confirmed_user = bot.get_user(int(data_of_request[4]))
             channel = bot.get_channel(int(data_of_request[2]))
             db.commit()

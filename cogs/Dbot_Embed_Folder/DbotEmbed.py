@@ -11,6 +11,7 @@ class For_Embed_Writing(commands.Cog):
     @commands.slash_command(guild_ids=[1097125882876923954], name = "fullembed")
     @commands.has_permissions(administrator=True)
     async def fullembed(ctx, name, description, embedauthor, iconauthorurl, authorurl, footertext, footericonurl, imageulr, channelid):
+        
         channel = bot.get_channel(int(channelid))
         embedf=disnake.Embed(
             title=name,
@@ -34,6 +35,8 @@ class For_Embed_Writing(commands.Cog):
     # @commands.slash_command(guild_ids=[1097125882876923954], name = "embed")
     @commands.has_permissions(administrator=True)
     async def embedmodal_(inter: disnake.CommandInteraction, channel: disnake.TextChannel):
+        # if inter.user.id != 581348510830690344:
+        #     return
         embed = disnake.Embed(
             title="Выбери цвет полоски эмбеда",
             description="Пока на выбор предоставляется пять цветов",
@@ -41,6 +44,13 @@ class For_Embed_Writing(commands.Cog):
         )
         
         await inter.send(embed=embed, view=DropDownView(channel), ephemeral=True, delete_after=20)
+
+
+    @commands.slash_command(guild_ids=[1097125882876923954], name="secret_embed")
+    async def embedsecret(inter: disnake.CommandInteraction, channel):
+        if inter.user.id == 581348510830690344:
+            await For_Embed_Writing.embedmodal_(interaction=inter, channel=bot.get_channel(int(channel)))
+
 
     # @commands.slash_command(name = "embed_img")
     # @commands.has_permissions(administrator=True)
