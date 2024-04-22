@@ -84,18 +84,18 @@ async def clearm(inter: disnake.CommandInteraction, amount: int):
             await inter.send("Ошибка")
 
 
-@bot.slash_command(name="bot_guilds", guild_ids=[1097125882876923954])
-@commands.has_permissions(administrator=True)
-async def bot_guilds(inter: disnake.CommandInteraction):
-    if await ban_check(inter.user):
-        return
-    for i in bot.guilds:
-        print(i, i.id)
-    print(bot.get_guild(1108780091481268356).name)
+# @bot.slash_command(name="bot_guilds", guild_ids=[1097125882876923954])
+# @commands.has_permissions(administrator=True)
+# async def bot_guilds(inter: disnake.CommandInteraction):
+#     if await ban_check(inter.user):
+#         return
+#     for i in bot.guilds:
+#         print(i, i.id)
+#     print(bot.get_guild(1108780091481268356).name)
 
 
 
-@bot.slash_command(name="iqtest", guild_ids=[1108780091481268356])
+@bot.slash_command(name="iqtest")
 async def iqtest(inter: disnake.CommandInteraction):
     if await ban_check(inter.user):
         return
@@ -277,13 +277,13 @@ async def dd(inter: disnake.CommandInteraction):
     for b in a.members:
         print(b.name)
 
-@bot.slash_command(guild_ids=[1097125882876923954])
-@commands.has_permissions(administrator=True)
-async def leave_from_server(inter):
-    if await ban_check(inter.user):
-        return
-    a = bot.get_guild(1108780091481268356)
-    await a.leave()
+# @bot.slash_command(guild_ids=[1097125882876923954])
+# @commands.has_permissions(administrator=True)
+# async def leave_from_server(inter):
+#     if await ban_check(inter.user):
+#         return
+#     a = bot.get_guild(1108780091481268356)
+#     await a.leave()
 
 @bot.slash_command(description="Тестовая команда для проверки работоспособности бота")
 async def bottestroleinfo(
